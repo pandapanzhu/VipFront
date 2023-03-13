@@ -29,7 +29,18 @@ export default defineConfig({
         path: '/table',
         component: './Table',
     },
+    {
+      name: ' 会员管理',
+      path: '/customer',
+      component: './Customer',
+    },
+    {
+    name: ' 动账记录',
+    path: '/charge',
+    component: './Charge',
+  },
   ],
   npmClient: 'pnpm',
+  proxy:{}
 });
 
