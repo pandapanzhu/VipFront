@@ -12,7 +12,7 @@ const ChargeDetail: React.FC<PropsWithChildren<ChargeDetail>> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title="新建"
+      title="详情"
       width={420}
       open={modalVisible}
       onCancel={() => onCancel()}

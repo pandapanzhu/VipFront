@@ -100,8 +100,8 @@ const TableList: React.FC<unknown> = () => {
           //   const success = await getDetail(value);
           //   if (success) {
           //     handleModalVisible(false);
-          //     if (actionRef.current) {
-          //       actionRef.current.reload();
+          //     if (actionRef.pageNumber) {
+          //       actionRef.pageNumber.reload();
           //     }
           //   }
           // }}

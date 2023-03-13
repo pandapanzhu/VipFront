@@ -9,9 +9,10 @@ export default defineConfig({
   },
   proxy:{
     "/host/api":{
-      "target":"http://localhost:8000",
+      "target":"http://localhost:8090",
+      // "target":"http://47.109.18.206:8090",
       "changeOrigin":true,
-      "pathRewrite":{"/host":''}
+      "pathRewrite":{"/host/api":''}
     }
   }
 });

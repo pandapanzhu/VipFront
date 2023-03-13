@@ -14,7 +14,7 @@ export async function queryList(
   },
   options?: { [key: string]: any },
 ) {
-  return request<API.Result_PageInfo_UserInfo__>('/host/api/v1/charge/queryList', {
+  return request<API.Result_PageInfo_UserInfo__>('/host/api/charge/list', {
     method: 'GET',
     params: {
       ...params,
@@ -33,7 +33,7 @@ export async function getDetail(
   options?: { [key: string]: any },
 ) {
   const { chargeId: param0 } = params;
-  return request<API.Result_UserInfo_>(`/host/api/detail/${param0}`, {
+  return request<API.Result_UserInfo_>(`/host/api/charge/info/${param0}`, {
     method: 'GET',
     params: { ...params },
     ...(options || {}),
