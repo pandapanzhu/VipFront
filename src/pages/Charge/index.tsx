@@ -71,7 +71,7 @@ const TableList: React.FC<unknown> = () => {
       <ProTable<API.ChargeInfo>
         headerTitle="查询表格"
         actionRef={actionRef}
-        rowKey="id"
+        rowKey="chargeId"
         search={{
           labelWidth: 120,
         }}
@@ -94,6 +94,7 @@ const TableList: React.FC<unknown> = () => {
       <ChargeDetail
         onCancel={() => handleModalVisible(false)}
         modalVisible={modalVisible}
+        values={stepFormValues}
       >
         <ProTable<API.ChargeInfo, API.ChargeInfo>
           // onSubmit={async (value) => {
@@ -105,7 +106,7 @@ const TableList: React.FC<unknown> = () => {
           //     }
           //   }
           // }}
-          rowKey="id"
+          rowKey="chargeId"
           type="form"
           columns={columns}
         />

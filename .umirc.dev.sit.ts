@@ -8,7 +8,7 @@ export default defineConfig({
   },
   proxy:{
     "/host/api":{
-      "target":"http://47.109.18.206:8090",
+      "target":"http://www.cd3yu.com/vip-test",
       "changeOrigin":true,
       "pathRewrite":{"/host/api":''}
     }

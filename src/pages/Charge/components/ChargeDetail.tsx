@@ -1,14 +1,19 @@
 import { Modal } from 'antd';
 import React, { PropsWithChildren } from 'react';
+import services from '@/services/charge';
 
 interface ChargeDetail {
   modalVisible: boolean;
   onCancel: () => void;
+  values: Partial<API.ChargeInfo>;
 }
+
+const { getDetail  } = services.ChargeController;
 
 const ChargeDetail: React.FC<PropsWithChildren<ChargeDetail>> = (props) => {
   const { modalVisible, onCancel } = props;
-
+  const chargeId = props.values.chargeId;
+  
   return (
     <Modal
       destroyOnClose
@@ -18,7 +23,17 @@ const ChargeDetail: React.FC<PropsWithChildren<ChargeDetail>> = (props) => {
       onCancel={() => onCancel()}
       footer={null}
     >
-      {props.children}
+    {/* request={async (params) => {
+          const { data, success } = await getDetail({
+            ...params
+          });
+          return {
+            data: data || {},
+            success,
+          };
+        }} */}
+
+      {/* {props.children} */}
     </Modal>
   );
 };
