@@ -97,15 +97,6 @@ const TableList: React.FC<unknown> = () => {
         values={stepFormValues}
       >
         <ProTable<API.ChargeInfo, API.ChargeInfo>
-          // onSubmit={async (value) => {
-          //   const success = await getDetail(value);
-          //   if (success) {
-          //     handleModalVisible(false);
-          //     if (actionRef.pageNumber) {
-          //       actionRef.pageNumber.reload();
-          //     }
-          //   }
-          // }}
           rowKey="chargeId"
           type="form"
           columns={columns}
