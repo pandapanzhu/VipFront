@@ -18,7 +18,7 @@ const CreateForm: React.FC<PropsWithChildren<CreateFormProps>> = (props) => {
       onCancel={() => onCancel()}
       footer={null}
     >
-      {props.children}
+      {/* {props.children} */}
     </Modal>
   );
 };

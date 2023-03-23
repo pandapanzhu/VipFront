@@ -7,7 +7,7 @@ declare namespace API {
     customerName?: string;
     customerMobile?: string;
     charge?: string;
-    reason?: UserGenderEnum;
+    reason?: string;
   }
 
   interface ChargeInfoVO {

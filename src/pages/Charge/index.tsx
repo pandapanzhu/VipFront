@@ -35,7 +35,7 @@ const TableList: React.FC<unknown> = () => {
     {
       title: '动账金额',
       dataIndex: 'charge',
-      valueType: 'text',
+      valueType: 'money',
     },
     {
       title: '动账原因',

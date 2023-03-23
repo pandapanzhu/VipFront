@@ -9,7 +9,7 @@ import {
 import { Modal } from 'antd';
 import React from 'react';
 
-export interface FormValueType extends Partial<API.UserInfo> {
+export interface FormValueType extends Partial<API.CustomerInfoVO> {
   target?: string;
   template?: string;
   type?: string;

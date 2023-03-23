@@ -6,20 +6,37 @@ declare namespace API {
   type CustomerGenderEnum = '男' | '女';
 
   interface CustomerInfo {
-    id?: string;
-    name?: string;
-    /** nick */
+    customerId?: string;
     nickName?: string;
-    /** email */
-    email?: string;
-    gender?: UserGenderEnum;
+    mobile?: string;
+    charge?: string;
+    //用户状态
+    status?: string;
+    //会员类型
+    type?: string;
+    remark?: string;
+    createTime?:Date;
+    createBy?:string;
   }
 
   interface CustomerInfoVO {
-    name?: string;
-    /** nick */
+    customerId?: string;
+    avatar?: string;
     nickName?: string;
-    /** email */
-    email?: string;
+    mobile?: string;
+    gender?: CustomerGenderEnum;
+    realName?:string;
+    idType?:string;
+    idNum?:string;
+    charge?: string;
+    status?: string;
+    remark?: string;
+    createTime?:Date;
+    createBy?:string;
+    updateTime?:Date;
+    updateBy?:string;
+    //会员类型
+    type?: string;
+    expiredDate:Date
   }
 }

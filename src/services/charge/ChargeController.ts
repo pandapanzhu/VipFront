@@ -26,15 +26,17 @@ export async function queryList(
 
 /** 此处后端没有提供注释 GET /api/v1/user/${param0} */
 export async function getDetail(
+  
   params: {
     // path
     chargeId?: string;
   },
   options?: { [key: string]: any },
 ) {
-  return request<API.Result_UserInfo_>(`/host/api/charge/info/`, {
+  const { chargeId: param0 } = params;
+  return request<API.Result_UserInfo_>(`/host/api/charge/info/${param0}`, {
     method: 'GET',
-    params: { ...params },
+    // params: { ...params },
     ...(options || {}),
   });
 }
