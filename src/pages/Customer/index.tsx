@@ -1,4 +1,4 @@
-import services from '@/services/demo';
+import services from '@/services/customer';
 import {
   ActionType,
   FooterToolbar,
@@ -12,10 +12,10 @@ import React, { useRef, useState } from 'react';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 
-const { queryList, getDetail } = services.UserController;
+const { addUser, modifyUser, deleteUser, queryUserList } = services.CustomerController;
 
 /**
- * 添加节点
+ * 添加用户
  * @param fields
  */
 const handleAdd = async (fields: API.UserInfo) => {
@@ -33,7 +33,7 @@ const handleAdd = async (fields: API.UserInfo) => {
 };
 
 /**
- * 更新节点
+ * 更新用户信息
  * @param fields
  */
 const handleUpdate = async (fields: FormValueType) => {
@@ -129,10 +129,12 @@ const TableList: React.FC<unknown> = () => {
               setStepFormValues(record);
             }}
           >
-            配置
+            修改
           </a>
           <Divider type="vertical" />
-          <a href="">订阅警报</a>
+          <a href="">动账</a>
+          <Divider type="vertical" />
+          <a href="">解冻/冻结</a>
         </>
       ),
     },
@@ -141,7 +143,7 @@ const TableList: React.FC<unknown> = () => {
   return (
     <PageContainer
       header={{
-        title: 'CRUD 示例',
+        title: '会员管理',
       }}
     >
       <ProTable<API.UserInfo>
@@ -157,7 +159,7 @@ const TableList: React.FC<unknown> = () => {
             type="primary"
             onClick={() => handleModalVisible(true)}
           >
-            新建
+            新增用户
           </Button>,
         ]}
         request={async (params, sorter, filter) => {
@@ -188,23 +190,23 @@ const TableList: React.FC<unknown> = () => {
             </div>
           }
         >
-          <Button
+          <Button danger={true}
             onClick={async () => {
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
               actionRef.current?.reloadAndRest?.();
             }}
           >
-            批量删除
+            批量冻结
           </Button>
-          <Button type="primary">批量审批</Button>
+          <Button type="primary">批量解冻</Button>
         </FooterToolbar>
       )}
       <CreateForm
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
       >
-        <ProTable<API.UserInfo, API.UserInfo>
+        <ProTable<API.CustomerInfo, API.CustomerInfo>
           onSubmit={async (value) => {
             const success = await handleAdd(value);
             if (success) {
@@ -219,6 +221,7 @@ const TableList: React.FC<unknown> = () => {
           columns={columns}
         />
       </CreateForm>
+
       {stepFormValues && Object.keys(stepFormValues).length ? (
         <UpdateForm
           onSubmit={async (value) => {
@@ -250,7 +253,7 @@ const TableList: React.FC<unknown> = () => {
       >
         {row?.name && (
           <ProDescriptions<API.UserInfo>
-            column={2}
+            column={4}
             title={row?.name}
             request={async () => ({
               data: row || {},

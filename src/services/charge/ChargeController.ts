@@ -32,8 +32,7 @@ export async function getDetail(
   },
   options?: { [key: string]: any },
 ) {
-  const { chargeId: param0 } = params;
-  return request<API.Result_UserInfo_>(`/host/api/charge/info/${param0}`, {
+  return request<API.Result_UserInfo_>(`/host/api/charge/info/`, {
     method: 'GET',
     params: { ...params },
     ...(options || {}),

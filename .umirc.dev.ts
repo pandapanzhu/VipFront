@@ -8,11 +8,11 @@ export default defineConfig({
     
   },
   proxy:{
-    "/host/api":{
-      "target":"http://localhost:8090",
-      "changeOrigin":true,
-      "pathRewrite":{"/host/api":''}
-    }
+    // "/host/api":{
+    //   "target":"http://localhost:8090",
+    //   "changeOrigin":true,
+    //   "pathRewrite":{"/host/api":''}
+    // }
   }
 });
 
