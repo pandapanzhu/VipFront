@@ -25,7 +25,7 @@ export async function queryUserList(
 }
 
 export async function addUser(
-  body?: API.UserInfoVO,
+  body?: API.CustomerInfoVO,
   options?: { [key: string]: any },
 ) {
   return request<API.Result_UserInfo_>('/host/api/customer/save', {
@@ -62,7 +62,7 @@ export async function modifyUser(
     /** userId */
     userId?: string;
   },
-  body?: API.UserInfoVO,
+  body?: API.CustomerInfoVO,
   options?: { [key: string]: any },
 ) {
   const { userId: param0 } = params;

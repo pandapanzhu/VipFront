@@ -237,21 +237,18 @@ const TableList: React.FC<unknown> = () => {
       <CreateForm
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
+        onSubmit = {async (value) => {
+          const success = await handleAdd(value);
+          if (success) {
+            handleModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}
       >
-        <ModalForm<API.CustomerInfoVO>
-          // onFinish = {async (value) => {
-          //   const success = await handleAdd(value);
-          //   if (success) {
-          //     handleModalVisible(false);
-          //     if (actionRef.current) {
-          //       actionRef.current.reload();
-          //     }
-          //   }
-          // }}
-        />
       </CreateForm>
 
-      {stepFormValues && Object.keys(stepFormValues).length ? (
         <UpdateForm
           onSubmit={async (value) => {
             const success = await handleUpdate(value);
@@ -270,7 +267,6 @@ const TableList: React.FC<unknown> = () => {
           updateModalVisible={updateModalVisible}
           values={stepFormValues}
         />
-      ) : null}
 
       <Drawer
         width={600}

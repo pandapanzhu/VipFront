@@ -219,6 +219,7 @@ const TableList: React.FC<unknown> = () => {
           type="form"
           columns={columns}
         />
+
       </CreateForm>
       {stepFormValues && Object.keys(stepFormValues).length ? (
         <UpdateForm

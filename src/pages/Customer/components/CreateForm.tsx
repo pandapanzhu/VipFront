@@ -18,34 +18,15 @@ import {
 interface CreateFormProps {
   modalVisible: boolean;
   onCancel: () => void;
+  onSubmit: (values: API.CustomerInfoVO) => Promise<void>;
 }
-const { addUser, modifyUser, deleteUser, queryUserList } = services.CustomerController;
-
-
-/**
- * 添加用户
- * @param fields
- */
- const handleAdd = async (fields: API.CustomerInfoVO) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addUser({ ...fields });
-    hide();
-    message.success('添加成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('添加失败请重试！');
-    return false;
-  }
-};
 
 const CreateForm: React.FC<PropsWithChildren<CreateFormProps>> = (props) => {
   const { modalVisible, onCancel } = props;
   const [form] = Form.useForm<API.CustomerInfoVO>();
   return (
     <ModalForm
-    initialValues={{"gender":'0','idType':'0','type':'1','charge':'0'}}
+      initialValues={{"gender":'0','idType':'0','type':'1','charge':'0'}}
       title="新建"
       width={800}
       open={modalVisible}
@@ -54,16 +35,13 @@ const CreateForm: React.FC<PropsWithChildren<CreateFormProps>> = (props) => {
         onCancel: () => onCancel(),
       }}
       form = {form}
-      onFinish = {async (values:API.CustomerInfoVO) => {
-        console.log(values);
-        const success = await handleAdd(values);
-        if (success) {
-          onCancel()
-        }
-      }}
+      onFinish = {props.onSubmit}
     >
       <ProForm.Group>
-      <ProFormUploadDragger width="lg" label="头像" name="avatar" placeholder="请上传头像"/>
+      <ProFormUploadDragger width="lg" label="头像" fieldProps={{
+        listType: 'picture-card'
+      }} name="avatar" max={1} description="仅支持图片" placeholder="请上传头像"/>
+
       <ProFormText width="md" label="客户姓名" name="nickName" placeholder="请输入名称" required/>
       <ProFormText width="md" label="手机号码" name="mobile" placeholder="请输入手机号码" required/>
       <ProFormRadio.Group width="md" label="性别" name="gender" options={[{

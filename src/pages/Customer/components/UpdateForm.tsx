@@ -1,3 +1,4 @@
+import { getDetail } from '@/services/charge/ChargeController';
 import {
   ProFormDateTimePicker,
   ProFormRadio,
@@ -7,7 +8,7 @@ import {
   StepsForm,
 } from '@ant-design/pro-components';
 import { Modal } from 'antd';
-import React from 'react';
+import React, { useEffect,useCallback,useState } from 'react';
 
 export interface FormValueType extends Partial<API.CustomerInfoVO> {
   target?: string;
@@ -21,18 +22,37 @@ export interface UpdateFormProps {
   onCancel: (flag?: boolean, formVals?: FormValueType) => void;
   onSubmit: (values: FormValueType) => Promise<void>;
   updateModalVisible: boolean;
-  values: Partial<API.UserInfo>;
+  values: Partial<API.CustomerInfoVO>;
+
 }
 
-const UpdateForm: React.FC<UpdateFormProps> = (props) => (
-  <StepsForm
+
+
+const UpdateForm: React.FC<UpdateFormProps> = (props) => {
+  const {values} = props;
+  const chargeId = values.customerId;
+
+  const [detail,setDetailValue] = useState({});
+
+  useEffect(()=>{
+    if(props.updateModalVisible){
+      someRequest();
+    }
+  },[chargeId])
+  const someRequest =  useCallback( async ()=>{
+    const res = await getDetail({chargeId:chargeId});
+    setDetailValue(res?.data);
+  },[chargeId]);
+
+
+ return <StepsForm
     stepsProps={{
       size: 'small',
     }}
     stepsFormRender={(dom, submitter) => {
       return (
         <Modal
-          width={640}
+          width={800}
           bodyStyle={{ padding: '32px 40px 48px' }}
           destroyOnClose
           title="规则配置"
@@ -48,7 +68,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => (
   >
     <StepsForm.StepForm
       initialValues={{
-        name: props.values.name,
+        name: props.values.nickName,
         nickName: props.values.nickName,
       }}
       title="基本信息"
@@ -133,6 +153,6 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => (
       />
     </StepsForm.StepForm>
   </StepsForm>
-);
+      }
 
 export default UpdateForm;

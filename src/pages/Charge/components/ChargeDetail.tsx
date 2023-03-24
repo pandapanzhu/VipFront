@@ -15,6 +15,7 @@ const ChargeDetail: React.FC<PropsWithChildren<ChargeDetail>> = (props) => {
   const { modalVisible, onCancel } = props;
   const chargeId = props.values.chargeId;
   useEffect(()=>{
+    if(modalVisible)
     someRequest();
   },[chargeId])
   const someRequest =  useCallback( async ()=>{
