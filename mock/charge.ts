@@ -4,18 +4,18 @@ const charges = [
 ];
 
 export default {
-  'GET /host/api/charge/list': (req: any, res: any) => {
-    res.json({
-      success: true,
-      data: { list: charges },
-      errorCode: 0,
-    });
-  },
-  'GET /host/api/charge/info/': (req: any, res: any) => {
-    res.json({
-      success: true,
-      errorCode: 0,
-      data: charges[0] ,
-    });
-  },
+  // 'GET /host/api/charge/list': (req: any, res: any) => {
+  //   res.json({
+  //     success: true,
+  //     data: { list: charges },
+  //     errorCode: 0,
+  //   });
+  // },
+  // 'GET /host/api/charge/info/': (req: any, res: any) => {
+  //   res.json({
+  //     success: true,
+  //     errorCode: 0,
+  //     data: charges[0] ,
+  //   });
+  // },
 };

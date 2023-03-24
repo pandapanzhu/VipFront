@@ -6,6 +6,7 @@ import {
   ProDescriptions,
   ProDescriptionsItemProps,
   ProTable,
+  ModalForm,
 } from '@ant-design/pro-components';
 import { Button, Divider, Drawer, message } from 'antd';
 import React, { useRef, useState } from 'react';
@@ -149,9 +150,23 @@ const TableList: React.FC<unknown> = () => {
             修改
           </a>
           <Divider type="vertical" />
-          <a href="">动账</a>
+          <a onClick={() => {
+              handleUpdateModalVisible(true);
+              setStepFormValues(record);
+            }}>动账</a>
           <Divider type="vertical" />
-          <a href="">解冻/冻结</a>
+
+          {record.status =="0"?
+            <a onClick={() => {
+              handleUpdateModalVisible(true);
+              setStepFormValues(record);
+            }}>冻结</a>
+          :
+            <a onClick={() => {
+              handleUpdateModalVisible(true);
+              setStepFormValues(record);
+            }}>解冻</a>
+          }
         </>
       ),
     },
@@ -166,7 +181,7 @@ const TableList: React.FC<unknown> = () => {
       <ProTable<API.CustomerInfo>
         headerTitle="查询表格"
         actionRef={actionRef}
-        rowKey="id"
+        rowKey="customerId"
         search={{
           labelWidth: 120,
         }}
@@ -223,19 +238,16 @@ const TableList: React.FC<unknown> = () => {
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
       >
-        <ProTable<API.CustomerInfoVO, API.CustomerInfoVO>
-          onSubmit={async (value) => {
-            const success = await handleAdd(value);
-            if (success) {
-              handleModalVisible(false);
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-          rowKey="id"
-          type="form"
-          // columns={columns}
+        <ModalForm<API.CustomerInfoVO>
+          // onFinish = {async (value) => {
+          //   const success = await handleAdd(value);
+          //   if (success) {
+          //     handleModalVisible(false);
+          //     if (actionRef.current) {
+          //       actionRef.current.reload();
+          //     }
+          //   }
+          // }}
         />
       </CreateForm>
 
