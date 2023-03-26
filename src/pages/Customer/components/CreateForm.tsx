@@ -1,6 +1,6 @@
 import services from '@/services/customer';
-import { Modal,Form,message } from 'antd';
-import React, { PropsWithChildren } from 'react';
+import { Form, UploadProps ,message} from 'antd';
+import React, { PropsWithChildren,useState } from 'react';
 import {
   ProFormMoney,
   LightFilter,
@@ -14,6 +14,8 @@ import {
   ProFormTextArea,
   ProFormDatePicker,
 } from '@ant-design/pro-components';
+import type { RcFile, UploadFile } from 'antd/es/upload/interface';
+const { imgUpload } = services.CustomerController;
 
 interface CreateFormProps {
   modalVisible: boolean;
@@ -24,10 +26,47 @@ interface CreateFormProps {
 const CreateForm: React.FC<PropsWithChildren<CreateFormProps>> = (props) => {
   const { modalVisible, onCancel } = props;
   const [form] = Form.useForm<API.CustomerInfoVO>();
+
+  const [fileList, setFileList] = useState<UploadFile[]>();
+  //在这里上传文件，不用默认的action
+  const onChange  = (async(params:any)=>{
+    console.log(params);
+    if(params.file.size>0 && params.file.status == "done"){
+    console.log(params.fileList.thumbUrl);
+      const formData = new FormData();
+      formData.append('file',params.file.originFileObj);
+      const msg = await imgUpload(formData);
+      if(200 == msg?.code){
+        form.setFieldValue("avatar",msg?.data[0]);
+        // setFileList([]) //params.fileList; 
+      }else{
+        message.error("上传失败，请稍后重试");
+      }
+      
+
+    }else{
+      console.log("删除文件");
+    }
+  });
+
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
+  // 预览
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+    //   file.preview = await getBase64(file.originFileObj as RcFile);
+    }
+
+    setPreviewImage(file.url || (file.preview as string));
+    setPreviewOpen(true);
+    setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
+  };
+
   return (
     <ModalForm
       initialValues={{"gender":'0','idType':'0','type':'1','charge':'0'}}
-      title="新建"
+      title="会员创建"
       width={800}
       open={modalVisible}
       modalProps={{
@@ -39,8 +78,16 @@ const CreateForm: React.FC<PropsWithChildren<CreateFormProps>> = (props) => {
     >
       <ProForm.Group>
       <ProFormUploadDragger width="lg" label="头像" fieldProps={{
-        listType: 'picture-card'
-      }} name="avatar" max={1} description="仅支持图片" placeholder="请上传头像"/>
+        listType: 'picture-card',
+        maxCount :1,
+        fileList:fileList
+      }} description="仅支持图片" placeholder="请上传头像"
+      onChange={onChange}
+      max={1}
+      action=""
+      />
+
+      <ProFormText width="md" label="头像地址" name="avatar" hidden/>
 
       <ProFormText width="md" label="客户姓名" name="nickName" placeholder="请输入名称" required/>
       <ProFormText width="md" label="手机号码" name="mobile" placeholder="请输入手机号码" required/>

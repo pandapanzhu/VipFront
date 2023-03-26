@@ -37,19 +37,10 @@ const handleAdd = async (fields: API.CustomerInfoVO) => {
  * 更新用户信息
  * @param fields
  */
-const handleUpdate = async (fields: FormValueType) => {
+const handleUpdate = async (fields: API.CustomerInfoVO) => {
   const hide = message.loading('正在配置');
   try {
-    // await modifyUser(
-    //   {
-    //     userId: fields.id || '',
-    //   },
-    //   {
-    //     name: fields.name || '',
-    //     nickName: fields.nickName || '',
-    //     email: fields.email || '',
-    //   },
-    // );
+    await modifyUser({...fields} );
     hide();
 
     message.success('配置成功');
@@ -191,7 +182,7 @@ const TableList: React.FC<unknown> = () => {
             type="primary"
             onClick={() => handleModalVisible(true)}
           >
-            新增用户
+            新增会员
           </Button>,
         ]}
         request={async (params, sorter, filter) => {

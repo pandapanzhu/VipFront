@@ -21,9 +21,9 @@ declare namespace API {
   }
 
   interface Result {
-    success?: boolean;
+    code?: number;
     errorMessage?: string;
-    data?: Record<string, any>;
+    data?: any;
   }
 
   interface Result_PageInfo_UserInfo__ {

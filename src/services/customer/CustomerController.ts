@@ -43,11 +43,11 @@ export async function getUserDetail(
   params: {
     // path
     /** userId */
-    userId?: string;
+    customerId?: string;
   },
   options?: { [key: string]: any },
 ) {
-  const { userId: param0 } = params;
+  const { customerId: param0 } = params;
   return request<API.Result_UserInfo_>(`/host/api/customer/info/${param0}`, {
     method: 'GET',
     // params: { ...params },
@@ -57,21 +57,14 @@ export async function getUserDetail(
 
 /** 此处后端没有提供注释 PUT /api/v1/user/${param0} */
 export async function modifyUser(
-  params: {
-    // path
-    /** userId */
-    userId?: string;
-  },
   body?: API.CustomerInfoVO,
   options?: { [key: string]: any },
 ) {
-  const { userId: param0 } = params;
   return request<API.Result_UserInfo_>(`/host/api/customer/update`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    params: { ...params },
     data: body,
     ...(options || {}),
   });
@@ -90,6 +83,21 @@ export async function deleteUser(
   return request<API.Result_string_>(`/host/api/customer/delete/`, {
     method: 'POST',
     params: { ...params },
+    ...(options || {}),
+  });
+}
+
+
+export async function imgUpload(
+  formData?: any,
+  options?: { [key: string]: any },
+) {
+  return request<API.Result>(`/host/api/upload/uploadBlobFile`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data: formData,
     ...(options || {}),
   });
 }
