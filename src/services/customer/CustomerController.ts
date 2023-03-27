@@ -71,15 +71,14 @@ export async function modifyUser(
 }
 
 /** 此处后端没有提供注释 DELETE /api/v1/user/${param0} */
-export async function deleteUser(
+export async function handleFreeze(
   params: {
     // path
     /** userId */
-    userId?: string;
+    customerId?: string;
   },
   options?: { [key: string]: any },
 ) {
-  const { userId: param0 } = params;
   return request<API.Result_string_>(`/host/api/customer/delete/`, {
     method: 'POST',
     params: { ...params },
@@ -100,4 +99,39 @@ export async function imgUpload(
     data: formData,
     ...(options || {}),
   });
+
 }
+  export async function handleCustomerCharge(
+    formData?: any,
+    options?: { [key: string]: any },
+  ) {
+    return request<API.Result>(`/host/api/customer/charge`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: formData,
+      ...(options || {}),
+    });
+  }
+
+
+  export async function getCustomerChargeList(
+    params: {
+      // path
+      /** userId */
+      customerId?: string;
+    },
+    options?: { [key: string]: any },
+  ) {
+    return request<API.Result>(`/host/api/customer/charge`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {
+        ...params,
+      },
+      ...(options || {}),
+    });
+  }

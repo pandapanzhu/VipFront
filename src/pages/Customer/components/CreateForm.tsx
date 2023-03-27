@@ -1,9 +1,8 @@
 import services from '@/services/customer';
-import { Form, UploadProps ,message} from 'antd';
+import { Form ,message,Modal} from 'antd';
 import React, { PropsWithChildren,useState } from 'react';
 import {
   ProFormMoney,
-  LightFilter,
   ProFormUploadDragger,
   ModalForm,
   ProForm,
@@ -12,7 +11,7 @@ import {
   ProFormSelect,
   ProFormText,
   ProFormTextArea,
-  ProFormDatePicker,
+  
 } from '@ant-design/pro-components';
 import type { RcFile, UploadFile } from 'antd/es/upload/interface';
 const { imgUpload } = services.CustomerController;
@@ -49,15 +48,23 @@ const CreateForm: React.FC<PropsWithChildren<CreateFormProps>> = (props) => {
     }
   });
 
+  //图片预览相关方法
+  const handleCancel = () => setPreviewOpen(false);
+  const getBase64 = (file: RcFile): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   // 预览
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
-    //   file.preview = await getBase64(file.originFileObj as RcFile);
+      file.preview = await getBase64(file.originFileObj as RcFile);
     }
-
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
     setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
@@ -80,11 +87,12 @@ const CreateForm: React.FC<PropsWithChildren<CreateFormProps>> = (props) => {
       <ProFormUploadDragger width="lg" label="头像" fieldProps={{
         listType: 'picture-card',
         maxCount :1,
-        fileList:fileList
+        fileList:fileList,
+        onPreview:handlePreview
       }} description="仅支持图片" placeholder="请上传头像"
-      onChange={onChange}
+      // onChange={onChange}
       max={1}
-      action=""
+      // action=""
       />
 
       <ProFormText width="md" label="头像地址" name="avatar" hidden/>
@@ -111,7 +119,13 @@ const CreateForm: React.FC<PropsWithChildren<CreateFormProps>> = (props) => {
       <ProFormDateTimePicker width="md" label="过期时间" name="expiredDate" placeholder="请选择过期时间"/>
       <ProFormTextArea width="md" label="备注" name="remark" placeholder="请输入备注"/>
       </ProForm.Group>
+
+      <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+      </Modal>
     </ModalForm>
+
+
   );
 };
 

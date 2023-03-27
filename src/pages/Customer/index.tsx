@@ -11,9 +11,11 @@ import {
 import { Button, Divider, Drawer, message } from 'antd';
 import React, { useRef, useState } from 'react';
 import CreateForm from './components/CreateForm';
-import UpdateForm, { FormValueType } from './components/UpdateForm';
+import FreezeForm from './components/FreezeForm';
+import ChargeForm from './components/ChargeForm';
+import UpdateForm from './components/UpdateForm';
 
-const { addUser, modifyUser, deleteUser, queryUserList } = services.CustomerController;
+const { addUser, modifyUser, handleFreeze, queryUserList,handleCustomerCharge } = services.CustomerController;
 
 /**
  * 添加用户
@@ -40,7 +42,7 @@ const handleAdd = async (fields: API.CustomerInfoVO) => {
 const handleUpdate = async (fields: API.CustomerInfoVO) => {
   const hide = message.loading('正在配置');
   try {
-    await modifyUser({...fields} );
+    await modifyUser({ ...fields });
     hide();
 
     message.success('配置成功');
@@ -53,30 +55,33 @@ const handleUpdate = async (fields: API.CustomerInfoVO) => {
 };
 
 /**
- *  删除节点
  * @param selectedRows
  */
 const handleRemove = async (selectedRows: API.CustomerInfo[]) => {
-  const hide = message.loading('正在删除');
+  const hide = message.loading('正在操作，请稍后');
   if (!selectedRows) return true;
   try {
-    await deleteUser({
-      userId: selectedRows.find((row) => row.customerId)?.customerId || '',
+    await handleFreeze({
+      customerId: selectedRows.find((row) => row.customerId)?.customerId || '',
     });
     hide();
-    message.success('删除成功，即将刷新');
+    message.success('操作成功，即将刷新');
     return true;
   } catch (error) {
     hide();
-    message.error('删除失败，请重试');
+    message.error('操作失败，请稍后重试');
     return false;
   }
 };
 
 const TableList: React.FC<unknown> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
-  const [updateModalVisible, handleUpdateModalVisible] =
-    useState<boolean>(false);
+  const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
+  //冻结，解冻的模态框
+  const [freezeModalVisible, handleFreezeModalVisible] = useState<boolean>(false);
+  //用户动账的模态框
+  const [chargeModalVisible, handleChargeModalVisible] = useState<boolean>(false);
+
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<API.CustomerInfo>();
@@ -108,23 +113,23 @@ const TableList: React.FC<unknown> = () => {
     {
       title: '状态',
       dataIndex: 'status',
-      valueEnum:{
-        "0":{text:"冻结",status:'0'},
-        "1":{text:"正常"}
+      valueEnum: {
+        "0": { text: "冻结", status: '0' },
+        "1": { text: "正常" }
       },
     },
     {
       title: '会员类型',
       dataIndex: 'type',
-      valueEnum:{
-        "1":{text:"永久会员"},
-        "2":{text:"限时会员"}
+      valueEnum: {
+        "1": { text: "永久会员" },
+        "2": { text: "限时会员" }
       },
     },
-      {
-        title: '开户时间',
-        dataIndex: 'createTime',
-        valueType:'dateTime',
+    {
+      title: '开户时间',
+      dataIndex: 'createTime',
+      valueType: 'dateTime',
     },
     {
       title: '操作',
@@ -142,19 +147,19 @@ const TableList: React.FC<unknown> = () => {
           </a>
           <Divider type="vertical" />
           <a onClick={() => {
-              handleUpdateModalVisible(true);
-              setStepFormValues(record);
-            }}>动账</a>
+            handleChargeModalVisible(true);
+            setStepFormValues(record);
+          }}>动账</a>
           <Divider type="vertical" />
 
-          {record.status =="0"?
+          {record.status == "0" ?
             <a onClick={() => {
-              handleUpdateModalVisible(true);
+              handleFreezeModalVisible(true);
               setStepFormValues(record);
             }}>冻结</a>
-          :
+            :
             <a onClick={() => {
-              handleUpdateModalVisible(true);
+              handleFreezeModalVisible(true);
               setStepFormValues(record);
             }}>解冻</a>
           }
@@ -228,7 +233,7 @@ const TableList: React.FC<unknown> = () => {
       <CreateForm
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
-        onSubmit = {async (value) => {
+        onSubmit={async (value) => {
           const success = await handleAdd(value);
           if (success) {
             handleModalVisible(false);
@@ -240,47 +245,64 @@ const TableList: React.FC<unknown> = () => {
       >
       </CreateForm>
 
-        <UpdateForm
-          onSubmit={async (value) => {
-            const success = await handleUpdate(value);
-            if (success) {
-              handleUpdateModalVisible(false);
-              setStepFormValues({});
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-          onCancel={() => {
+      <UpdateForm
+        onSubmit={async (value) => {
+          const success = await handleUpdate(value);
+          if (success) {
             handleUpdateModalVisible(false);
             setStepFormValues({});
-          }}
-          updateModalVisible={updateModalVisible}
-          values={stepFormValues}
-        />
-
-      <Drawer
-        width={600}
-        open={!!row}
-        onClose={() => {
-          setRow(undefined);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
         }}
-        closable={false}
-      >
-        {row?.nickName && (
-          <ProDescriptions<API.CustomerInfo>
-            column={4}
-            title={row?.nickName}
-            request={async () => ({
-              data: row || {},
-            })}
-            params={{
-              id: row?.nickName,
-            }}
-            columns={columns}
-          />
-        )}
-      </Drawer>
+        onCancel={() => {
+          handleUpdateModalVisible(false);
+          setStepFormValues({});
+        }}
+        updateModalVisible={updateModalVisible}
+        values={stepFormValues}
+      />
+      <FreezeForm
+        onSubmit={async (value) => {
+          selectedRowsState.push(value);
+          const success = await handleRemove(selectedRowsState);
+          if (success) {
+            handleUpdateModalVisible(false);
+            setStepFormValues({});
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+          setSelectedRows([]);
+        }}
+        onCancel={() => {
+          handleFreezeModalVisible(false);
+          setStepFormValues({});
+        }}
+        modalVisible={freezeModalVisible}
+        values={stepFormValues}
+      />
+      <ChargeForm
+        onSubmit={async (value) => {
+          console.log("点击提交按钮，准备动账");
+          const success = await handleCustomerCharge(value);
+          if (success) {
+            handleChargeModalVisible(false);
+            setStepFormValues({});
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+          setSelectedRows([]);
+        }}
+        onCancel={() => {
+          handleChargeModalVisible(false);
+          setStepFormValues({});
+        }}
+        modalVisible={chargeModalVisible}
+        values={stepFormValues}
+      />
     </PageContainer>
   );
 };

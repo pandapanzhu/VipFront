@@ -21,9 +21,5 @@ declare namespace API {
     createTime?: string;
     updateBy?: string;
     updateTime?: string;
-    
-    
-    
-    
   }
 }
