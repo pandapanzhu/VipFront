@@ -40,3 +40,20 @@ export async function getDetail(
     ...(options || {}),
   });
 }
+
+
+/** 保存动账信息*/
+ 
+export async function saveCharge(
+  
+  params: {
+    body?: API.ChargeInfo,
+  },
+  options?: { [key: string]: any },
+) {
+  return request<API.Result_UserInfo_>(`/host/api/charge/save`, {
+    method: 'POST',
+    data: { ...params },
+    ...(options || {}),
+  });
+}

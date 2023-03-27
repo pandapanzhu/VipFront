@@ -74,14 +74,14 @@ export async function modifyUser(
 export async function handleFreeze(
   params: {
     // path
-    /** userId */
-    customerId?: string;
+    ids?: (string | undefined)[] | undefined ,
+    type?: string
   },
   options?: { [key: string]: any },
 ) {
   return request<API.Result_string_>(`/host/api/customer/delete/`, {
     method: 'POST',
-    params: { ...params },
+    data: params,
     ...(options || {}),
   });
 }
@@ -105,7 +105,7 @@ export async function imgUpload(
     formData?: any,
     options?: { [key: string]: any },
   ) {
-    return request<API.Result>(`/host/api/customer/charge`, {
+    return request<API.Result>(`/host/api/charge/save`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -124,8 +124,8 @@ export async function imgUpload(
     },
     options?: { [key: string]: any },
   ) {
-    return request<API.Result>(`/host/api/customer/charge`, {
-      method: 'POST',
+    return request<API.Result>(`/host/api/customer/chargeList`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },

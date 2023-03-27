@@ -9,7 +9,9 @@ import {
   ProDescriptionsItemProps,
   ProForm,
   ProTable,
-  ProFormMoney
+  ProFormMoney,
+  ProFormText,
+  ProFormTextArea
 } from '@ant-design/pro-components';
 
 const { getCustomerChargeList } = services.CustomerController;
@@ -18,13 +20,13 @@ const { getCustomerChargeList } = services.CustomerController;
 interface ChargeFormProps {
   modalVisible: boolean;
   onCancel: () => void;
-  onSubmit: (values: API.CustomerInfo) => Promise<void>;
+  onSubmit: (values: API.ChargeInfo) => Promise<void>;
   values: Partial<API.CustomerInfo>;
 }
 
 const ChargeForm: React.FC<ChargeFormProps> = (props) => {
   const { modalVisible, onCancel } = props;
-  const [form] = Form.useForm<API.CustomerInfo>();
+  const [form] = Form.useForm<API.ChargeInfo>();
   const customerId = props.values.customerId;
   const nickName = props.values.nickName;
   const actionRef = useRef<ActionType>();
@@ -44,7 +46,7 @@ const ChargeForm: React.FC<ChargeFormProps> = (props) => {
 
   const columns: ProDescriptionsItemProps<API.ChargeInfo>[] = [
     {
-      title: '用户名称',
+      title: '昵称',
       dataIndex: 'customerName',
       valueType: 'text',
       hideInSearch: true
@@ -58,6 +60,10 @@ const ChargeForm: React.FC<ChargeFormProps> = (props) => {
       title: '类型',
       dataIndex: 'status',
       valueType: 'text',
+      valueEnum: {
+        "0": { text: "消费", status: '0' },
+        "1": { text: "充值" }
+      },
     },
     {
       title: '原因',
@@ -68,12 +74,12 @@ const ChargeForm: React.FC<ChargeFormProps> = (props) => {
 
   return (
     <ModalForm
-      initialValues={{ status: '1', charge: 0 }}
+      initialValues={{ status: '1', charge: 0,customerId:customerId }}
       modalProps={{
         destroyOnClose: true,
         onCancel: () => onCancel(),
       }}
-      title={"客户姓名" + nickName}
+      title={"会员昵称:" + nickName}
       width={1000}
       open={modalVisible}
       form={form}
@@ -88,9 +94,10 @@ const ChargeForm: React.FC<ChargeFormProps> = (props) => {
         {
           label: '消费',
           value: '0',
-        },]} />
-
-        <ProFormMoney width="md" label="动账金额" name="charge" placeholder="请输入动账金额" />
+        },]} required />
+      <ProFormText width="md" label="隐藏的用户ID" name="customerId" hidden />
+      <ProFormMoney width="md" label="动账金额" name="charge" placeholder="请输入动账金额" required/>
+      <ProFormText width="sm" label="动账原因" name="reason" placeholder="请输入动账原因，非必填" />
       </ProForm.Group>
       <PageContainer
         header={{
@@ -102,6 +109,7 @@ const ChargeForm: React.FC<ChargeFormProps> = (props) => {
           actionRef={actionRef}
           rowKey="customerId"
           search={false}
+          params = {{customerId:customerId}}
           request={async (params, sorter, filter) => {
             const { data, code } = await getCustomerChargeList({
               ...params,

@@ -4,18 +4,18 @@ const users = [
 ];
 
 export default {
-  'GET /host/api/customer/list': (req: any, res: any) => {
-    res.json({
-      success: true,
-      data: { list: users },
-      errorCode: 0,
-    });
-  },
-  'GET /host/api/customer/info/0': (req: any, res: any) => {
-    res.json({
-      success: true,
-      data:users[0],
-      errorCode: 0,
-    });
-  },
+  // 'GET /host/api/customer/list': (req: any, res: any) => {
+  //   res.json({
+  //     success: true,
+  //     data: { list: users },
+  //     errorCode: 0,
+  //   });
+  // },
+  // 'GET /host/api/customer/info/0': (req: any, res: any) => {
+  //   res.json({
+  //     success: true,
+  //     data:users[0],
+  //     errorCode: 0,
+  //   });
+  // },
 };

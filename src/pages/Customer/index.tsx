@@ -57,12 +57,13 @@ const handleUpdate = async (fields: API.CustomerInfoVO) => {
 /**
  * @param selectedRows
  */
-const handleRemove = async (selectedRows: API.CustomerInfo[]) => {
+const handleRemove = async (selectedRows: API.CustomerInfo[],type:string) => {
   const hide = message.loading('正在操作，请稍后');
   if (!selectedRows) return true;
   try {
     await handleFreeze({
-      customerId: selectedRows.find((row) => row.customerId)?.customerId || '',
+      ids: selectedRows.map((row) => row?.customerId).flat() || [],
+      type: type
     });
     hide();
     message.success('操作成功，即将刷新');
@@ -82,15 +83,15 @@ const TableList: React.FC<unknown> = () => {
   //用户动账的模态框
   const [chargeModalVisible, handleChargeModalVisible] = useState<boolean>(false);
 
-  const [stepFormValues, setStepFormValues] = useState({});
+  const [stepFormValues, setStepFormValues] = useState<API.CustomerInfo>({});
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<API.CustomerInfo>();
   const [selectedRowsState, setSelectedRows] = useState<API.CustomerInfo[]>([]);
   const columns: ProDescriptionsItemProps<API.CustomerInfo>[] = [
     {
-      title: '姓名',
+      title: '昵称',
       dataIndex: 'nickName',
-      tip: '用户姓名',
+      tip: '会员昵称',
       formItemProps: {
         rules: [
           {
@@ -156,12 +157,12 @@ const TableList: React.FC<unknown> = () => {
             <a onClick={() => {
               handleFreezeModalVisible(true);
               setStepFormValues(record);
-            }}>冻结</a>
+            }}>解冻</a>
             :
             <a onClick={() => {
               handleFreezeModalVisible(true);
               setStepFormValues(record);
-            }}>解冻</a>
+            }}>冻结</a>
           }
         </>
       ),
@@ -220,14 +221,20 @@ const TableList: React.FC<unknown> = () => {
         >
           <Button danger={true}
             onClick={async () => {
-              await handleRemove(selectedRowsState);
+              await handleRemove(selectedRowsState,'0');
               setSelectedRows([]);
               actionRef.current?.reloadAndRest?.();
             }}
           >
             批量冻结
           </Button>
-          <Button type="primary">批量解冻</Button>
+          <Button type="primary" 
+          onClick={async () => {
+            await handleRemove(selectedRowsState,'1');
+            setSelectedRows([]);
+            actionRef.current?.reloadAndRest?.();
+          }}
+          >批量解冻</Button>
         </FooterToolbar>
       )}
       <CreateForm
@@ -264,11 +271,12 @@ const TableList: React.FC<unknown> = () => {
         values={stepFormValues}
       />
       <FreezeForm
-        onSubmit={async (value) => {
-          selectedRowsState.push(value);
-          const success = await handleRemove(selectedRowsState);
+        onSubmit={async () => {
+          selectedRowsState.push(stepFormValues);
+          const type = (stepFormValues.status=='1'?'0':'1');
+          const success = await handleRemove(selectedRowsState,type);
           if (success) {
-            handleUpdateModalVisible(false);
+            handleFreezeModalVisible(false);
             setStepFormValues({});
             if (actionRef.current) {
               actionRef.current.reload();
@@ -285,14 +293,16 @@ const TableList: React.FC<unknown> = () => {
       />
       <ChargeForm
         onSubmit={async (value) => {
-          console.log("点击提交按钮，准备动账");
-          const success = await handleCustomerCharge(value);
-          if (success) {
+          const result = await handleCustomerCharge(value);
+          if (200 == result?.code) {
+            message.info("操作成功");
             handleChargeModalVisible(false);
             setStepFormValues({});
             if (actionRef.current) {
               actionRef.current.reload();
             }
+          }else{
+            message.error(result.msg);
           }
           setSelectedRows([]);
         }}

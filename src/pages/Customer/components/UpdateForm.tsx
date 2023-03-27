@@ -96,7 +96,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         return res?.data
       }}
       title="新建"
-      width={800}
+      width={1000}
       open={updateModalVisible}
       modalProps={{
         destroyOnClose: true,
@@ -113,6 +113,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           onPreview: handlePreview
         }} description="仅支持图片" placeholder="请上传头像" />
 
+        <ProFormText width="md" label="隐藏的用户ID" name="customerId" hidden />
         <ProFormText width="md" label="头像地址" name="avatar" hidden />
         <ProFormText width="md" label="客户姓名" name="nickName" placeholder="请输入名称" required />
         <ProFormText width="md" label="手机号码" name="mobile" placeholder="请输入手机号码" required />

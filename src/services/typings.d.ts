@@ -22,7 +22,7 @@ declare namespace API {
 
   interface Result {
     code?: number;
-    errorMessage?: string;
+    msg?: string;
     data?: any;
   }
 
