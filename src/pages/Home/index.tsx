@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 const { RangePicker } = DatePicker;
 
 const HomePage: React.FC = () => {
-  const { name } = useModel('global');
+  const { name,welcome } = useModel('global');
   const dateFormat = "YYYY-MM-DD";
   const today = dayjs().format(dateFormat);
   const lastMonth = dayjs().subtract(1, 'month').format(dateFormat);
@@ -109,7 +109,7 @@ const HomePage: React.FC = () => {
   });
   return (
     <PageContainer ghost>
-      <Guide name={trim(name)} />
+      <Guide name={trim(welcome)} />
 
       <div>
         请选择时间范围：

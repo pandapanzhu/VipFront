@@ -24,18 +24,18 @@ export default defineConfig({
     //   path: '/access',
     //   component: './Access',
     // },
-    // {
-    //     name: ' CRUD 示例',
-    //     path: '/table',
-    //     component: './Table',
-    // },
     {
-      name: ' 会员管理',
+        path: '/login',
+        component: './Login',
+        isLayout:false
+    },
+    {
+      name: '会员管理',
       path: '/customer',
       component: './Customer',
     },
     {
-    name: ' 动账记录',
+    name: '动账记录',
     path: '/charge',
     component: './Charge',
   },
