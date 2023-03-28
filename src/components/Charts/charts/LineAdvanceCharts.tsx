@@ -14,7 +14,7 @@ const Charts: React.FC<Props> = (props) => {
 				shape="smooth"
 				point
 				area
-				position="date*topUp"
+				position="date*num"
 				color="type"
 			/>
 		</Chart>
