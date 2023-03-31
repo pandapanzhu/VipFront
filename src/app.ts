@@ -1,5 +1,4 @@
 // 运行时配置
-import { useNavigate } from 'react-router-dom';
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 export async function getInitialState(): Promise<{ name: string }> {
@@ -7,19 +6,46 @@ export async function getInitialState(): Promise<{ name: string }> {
 }
 
 
-//在路由初始化或者变动时监听
-export function onRouteChange() {
-  const isLogin = localStorage.getItem('name');
-//   history.pushState({
-//     url: '/login',
-//     title:'title'
-    
-// });
-  // const route = matchRoutes(clientRoutes, location.pathname)?.pop()?.route;
-  // if (route) {
-  //   document.title = route.title || '';
-  // }
-}
+import type { RequestConfig } from '@umijs/max';
+import { message } from 'antd';
+export const request: RequestConfig = {
+  timeout: 30000,
+  // other axios options you want
+  errorConfig: {
+    errorHandler() {
+    },
+    errorThrower() {
+    }
+  },
+  requestInterceptors: [
+    (config: Request) => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        // message.warning("登录超时，请重新登录");
+        // window.location.href = "/login";
+      } else {
+        // 拦截请求配置，进行个性化处理。
+        const url = config.url.concat('?token=' + token);
+        return { ...config, url };
+      }
+      return { ...config };
+    }
+  ],
+  responseInterceptors: [
+    // 直接写一个 function，作为拦截器
+    (response) => {
+      // 如果返回的401则跳转到登录页面，返回的402则提示已过期，需要续费
+      const code = response.status;
+      if (401 == code) {
+        message.warning("登录超时，请重新登录");
+        window.location.href = "/login";
+      } else if (402 == code) {
+        message.error("你的账户余额不足，请及时充值");
+      }
+      return response;
+    }
+  ]
+};
 
 export const layout = () => {
   return {

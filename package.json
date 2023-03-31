@@ -22,8 +22,7 @@
     "@umijs/max": "^4.0.56",
     "antd": "^5.0.0",
     "bizcharts": "^4.1.22",
-    "dayjs": "^1.11.7",
-    "react-router-dom": "^6.9.0"
+    "dayjs": "^1.11.7"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",

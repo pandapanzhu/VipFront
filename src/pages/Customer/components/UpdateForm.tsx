@@ -95,7 +95,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         }]);
         return res?.data
       }}
-      title="新建"
+      title="修改会员信息"
       width={1000}
       open={updateModalVisible}
       modalProps={{

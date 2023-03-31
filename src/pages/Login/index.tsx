@@ -1,5 +1,4 @@
-import { useModel } from '@umijs/max';
-import { useNavigate } from 'react-router-dom';
+import { useModel,useNavigate } from '@umijs/max';
 import { Button, Divider, message, Space, Tabs } from 'antd';
 import { useState, CSSProperties } from 'react';
 import {
