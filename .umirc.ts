@@ -9,6 +9,7 @@ export default defineConfig({
   layout: {
     title: '会员管理系统',
   },
+  
   routes: [
     {
       path: '/',
@@ -27,7 +28,8 @@ export default defineConfig({
     {
         path: '/login',
         component: './Login',
-        isLayout:false
+        menuRender:false,
+        // headerRender:false
     },
     {
       name: '会员管理',

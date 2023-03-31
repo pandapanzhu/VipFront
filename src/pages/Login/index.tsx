@@ -1,6 +1,7 @@
 import { useModel,useNavigate } from '@umijs/max';
-import { Button, Divider, message, Space, Tabs } from 'antd';
+import { message, } from 'antd';
 import { useState, CSSProperties } from 'react';
+import services from '@/services/login';
 import {
     LoginForm,
     ProFormCaptcha,
@@ -9,7 +10,8 @@ import {
     ProConfigProvider,
 } from '@ant-design/pro-components';
 
-type LoginType = 'phone' | 'account';
+const { doLogin,doLogout,getCaptcha } = services.LoginController;
+
 
 const iconStyles: CSSProperties = {
     color: 'rgba(0, 0, 0, 0.2)',
@@ -18,14 +20,14 @@ const iconStyles: CSSProperties = {
     cursor: 'pointer',
 };
 
-const LoginPage: React.FC = () => {
+const LoginPage: React.FC<API.LoginInfo> = () => {
     const { name,welcome,logoUrl } = useModel('global');
     const navigate = useNavigate();
 
-    const login = async (fields: API.CustomerInfoVO) => {
-        const hide = message.loading('正在配置');
+    const login = async (fields: API.LoginInfo) => {
+        const hide = message.loading('正在登录，请稍后');
         try {
-        //   await modifyUser({ ...fields });
+          await doLogin({ ...fields });
           hide();
           message.success('登录成功，正在为你跳转');
           navigate('/');
@@ -37,7 +39,7 @@ const LoginPage: React.FC = () => {
 
     return (
         <ProConfigProvider hashed={false}>
-            <div style={{ backgroundColor: 'white' }}>
+            <div style={{ backgroundColor: 'white'}}>
                 <LoginForm
                     logo={logoUrl}
                     title={name}
@@ -51,7 +53,7 @@ const LoginPage: React.FC = () => {
                                 size: 'large',
                                 // prefix: <UserOutlined className={'prefixIcon'} />,
                             }}
-                            placeholder={'请输入用户名: admin or user'}
+                            placeholder={'请输入用户名'}
                             rules={[
                                 {
                                     required: true,
@@ -64,7 +66,7 @@ const LoginPage: React.FC = () => {
                             fieldProps={{
                                 size: 'large',
                             }}
-                            placeholder={'密码: ant.design'}
+                            placeholder={'请输入密码'}
                             rules={[
                                 {
                                     required: true,
