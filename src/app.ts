@@ -20,13 +20,18 @@ export const request: RequestConfig = {
   requestInterceptors: [
     (config: Request) => {
       const token = localStorage.getItem("token");
+      const url = config.url;
       if (!token) {
         // message.warning("登录超时，请重新登录");
         // window.location.href = "/login";
-      } else {
+      }else if(url.indexOf('doLogin')){
+        //登录接口直接放过
+        return { ...config };
+      }
+       else {
         // 拦截请求配置，进行个性化处理。
-        const url = config.url.concat('?token=' + token);
-        return { ...config, url };
+        const urlToken = url.concat('?token=' + token);
+        return { ...config, urlToken };
       }
       return { ...config };
     }
