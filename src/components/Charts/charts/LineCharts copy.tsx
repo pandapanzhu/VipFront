@@ -156,7 +156,6 @@ const Charts: React.FC<Props> = (props) => {
 					autoFit
 					height={300}
 					data={Linedata}
-					onLineClick={console.log}
 					scale={{ value: { min: 0, alias: '人均年收入', type: 'linear-strict' }, year: { range: [0, 1] } }}
 				>
 

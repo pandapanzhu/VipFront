@@ -64,9 +64,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
 
   //在这里上传文件，不用默认的action
   const onChange = (async (params: any) => {
-    console.log(params);
     if (params.file.size > 0 && params.file.status == "done") {
-      console.log(params.fileList.thumbUrl);
       const formData = new FormData();
       formData.append('file', params.file.originFileObj);
       const msg = await imgUpload(formData);
@@ -75,8 +73,6 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       } else {
         message.error("上传失败，请稍后重试");
       }
-
-
     } else {
       console.log("删除文件");
     }

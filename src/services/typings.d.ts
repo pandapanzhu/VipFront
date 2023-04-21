@@ -43,4 +43,14 @@ declare namespace API {
     errorMessage?: string;
     data?: string;
   }
+  interface userInfo {
+    id?: string | number;
+    avatar?: string;
+    email?: string;
+    password?: string;
+    phone?: string;
+    role?: Role.RoleEntity[];
+    userName?: string;
+    expireTime:Date;
+  }
 }

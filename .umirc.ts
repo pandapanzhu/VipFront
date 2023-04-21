@@ -9,7 +9,7 @@ export default defineConfig({
   layout: {
     title: '会员管理系统',
   },
-  
+
   routes: [
     {
       path: '/',
@@ -26,10 +26,10 @@ export default defineConfig({
     //   component: './Access',
     // },
     {
-        path: '/login',
-        component: './Login',
-        menuRender:false,
-        // headerRender:false
+      path: '/login',
+      component: './Login',
+      menuRender: false,
+      // headerRender:false
     },
     {
       name: '会员管理',
@@ -37,12 +37,12 @@ export default defineConfig({
       component: './Customer',
     },
     {
-    name: '动账记录',
-    path: '/charge',
-    component: './Charge',
-  },
+      name: '动账记录',
+      path: '/charge',
+      component: './Charge',
+    },
   ],
   npmClient: 'pnpm',
-  proxy:{}
+  proxy: {}
 });
 

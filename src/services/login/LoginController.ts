@@ -28,10 +28,17 @@ export async function doLogout(
  * @returns 
  */
 export async function getCaptcha(
+  params: {
+    uuid?: string;
+  },
   options?: { [key: string]: any },
 ) {
-  return request<API.Result>(`/host/api/login/getCaptcha`, {
+  const { uuid: param0 } = params;
+  return request<any>(`/host/api/login/getCapture`, {
     method: 'GET',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }
@@ -46,7 +53,7 @@ export async function getCaptcha(
   options?: { [key: string]: any },
 ) {
   return request<API.Result>(`/host/api/login/getUserInfo`, {
-    method: 'GET',
+    method: 'POST',
     ...(options || {}),
   });
 }

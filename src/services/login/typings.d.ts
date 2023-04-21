@@ -7,6 +7,7 @@ declare namespace API {
     password?: string;
     captcha?: string;
     remenberMe?:boolean;
+    loginId?: string;
   }
 
   interface TokenInfo {

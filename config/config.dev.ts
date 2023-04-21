@@ -8,6 +8,7 @@ export default defineConfig({
       REACT_APP_MINIO_ENDPOINT: 'dev.aimed.cn',
       REACT_APP_MINIO_ACCESSKEY: 'dev',
       REACT_APP_MINIO_SECRETKEY: 'dev',
+      UMI_ENV:process.env.UMI_ENV,
     },
   },
 });

@@ -16,6 +16,7 @@ const Charts: React.FC<Props> = (props) => {
 				area
 				position="date*num"
 				color="type"
+				label="aaaa"
 			/>
 		</Chart>
 

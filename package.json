@@ -4,18 +4,26 @@
   "scripts": {
     "dev": "pnpm start:dev",
     "build": "max build",
-    "build:dev": "cross-env UMI_ENV=dev UMI_UI=none max build",
-    "build:test": "cross-env UMI_ENV=sit UMI_UI=none max build",
-    "build:prod": "cross-env UMI_ENV=prod UMI_UI=none max build",
+    "build:dev": "cross-env UMI_ENV=dev  max build",
+    "build:test": "cross-env UMI_ENV=sit  max build",
+    "build:prod": "cross-env UMI_ENV=prod  max build",
     "format": "prettier --cache --write .",
     "prepare": "husky install",
     "postinstall": "max setup",
     "setup": "max setup",
     "start": "npm run dev",
-    "start:dev": "cross-env UMI_ENV=dev UMI_UI=none max dev",
-    "start:sit": "cross-env UMI_UI=none UMI_ENV=sit max dev",
-    "start:prod": "cross-env UMI_ENV=prod UMI_UI=none max dev",
-    "start:noui": "cross-env UMI_UI=none max dev"
+    "start:dev": "cross-env UMI_ENV=dev  max dev",
+    "start:sit": "cross-env  UMI_ENV=sit max dev",
+    "start:prod": "cross-env UMI_ENV=prod  max dev",
+    "start:noui": "cross-env  max dev"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css,less}": [
+      "umi lint"
+    ],
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -23,7 +31,10 @@
     "@umijs/max": "^4.0.56",
     "antd": "^5.0.0",
     "bizcharts": "^4.1.22",
-    "dayjs": "^1.11.7"
+    "classnames": "^2.3.2",
+    "crypto-js": "^4.1.1",
+    "dayjs": "^1.11.7",
+    "rc-menu": "^9.8.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",

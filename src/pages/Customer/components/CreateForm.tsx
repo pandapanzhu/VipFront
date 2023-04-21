@@ -29,9 +29,7 @@ const CreateForm: React.FC<PropsWithChildren<CreateFormProps>> = (props) => {
   const [fileList, setFileList] = useState<UploadFile[]>();
   //在这里上传文件，不用默认的action
   const onChange  = (async(params:any)=>{
-    console.log(params);
     if(params.file.size>0 && params.file.status == "done"){
-    console.log(params.fileList.thumbUrl);
       const formData = new FormData();
       formData.append('file',params.file.originFileObj);
       const msg = await imgUpload(formData);
