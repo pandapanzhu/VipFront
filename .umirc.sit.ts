@@ -4,14 +4,45 @@ export default defineConfig({
   define:{
     "process.env":{
       UMI_ENV:'sit',
+      BASE_URL:'/viptest/'
     },
   },
   proxy:{
-    "/host/api":{
-      "target":"http://47.109.18.206:8090",
+    "/vip-test-backend":{
+      "target":"https://www.cd3yu.com/",
       "changeOrigin":true,
-      "pathRewrite":{"/host/api":''}
+      "pathRewrite":{"/vip-test-backend":''}
     }
-  }
+  },
+  publicPath: '/viptest/',
+  // base: '/viptest/',
+  history:{type:'hash'},
+  routes: [
+    {
+      path: '/',
+      redirect: '/home',
+    },
+    {
+      name: '首页',
+      path: '/home',
+      component: './Home',
+    },
+    {
+      path: '/login',
+      component: './Login',
+      menuRender: false,
+      // headerRender:false
+    },
+    {
+      name: '会员管理',
+      path: '/customer',
+      component: './Customer',
+    },
+    {
+      name: '动账记录',
+      path: '/charge',
+      component: './Charge',
+    },
+  ],
 });
 

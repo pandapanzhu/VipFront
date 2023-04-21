@@ -5,7 +5,7 @@ export async function doLogin(
   body?: API.LoginInfo,
   options?: { [key: string]: any },
 ) {
-  return request<API.Result>('/host/api/login/doLogin', {
+  return request<API.Result>('/vip-test-backend/login/doLogin', {
     method: 'POST',
     data: body,
     ...(options || {}),
@@ -16,7 +16,7 @@ export async function doLogin(
 export async function doLogout(
   options?: { [key: string]: any },
 ) {
-  return request<API.Result>(`/host/api/login/logout`, {
+  return request<API.Result>(`/vip-test-backend/login/logout`, {
     method: 'POST',
     ...(options || {}),
   });
@@ -34,7 +34,7 @@ export async function getCaptcha(
   options?: { [key: string]: any },
 ) {
   const { uuid: param0 } = params;
-  return request<any>(`/host/api/login/getCapture`, {
+  return request<any>(`/vip-test-backend/login/getCapture`, {
     method: 'GET',
     params: {
       ...params,
@@ -52,7 +52,7 @@ export async function getCaptcha(
  export async function getUserInfo(
   options?: { [key: string]: any },
 ) {
-  return request<API.Result>(`/host/api/login/getUserInfo`, {
+  return request<API.Result>(`/vip-test-backend/login/getUserInfo`, {
     method: 'POST',
     ...(options || {}),
   });

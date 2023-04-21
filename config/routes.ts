@@ -30,35 +30,36 @@
 // import { AUTH_ITEM_ENUM } from '../src/common/authList';
 
 // },
-export default [
-  {
-    path: '/',
-    redirect: '/home',
-  },
-  {
-    name: '首页',
-    path: '/home',
-    component: './Home',
-  },
-  // {
-  //   name: '权限演示',
-  //   path: '/access',
-  //   component: './Access',
-  // },
-  {
-    path: '/login',
-    component: './Login',
-    menuRender: false,
-    // headerRender:false
-  },
-  {
-    name: '会员管理',
-    path: '/customer',
-    component: './Customer',
-  },
-  {
-    name: '动账记录',
-    path: '/charge',
-    component: './Charge',
-  },
-];
+
+// export default [
+//   {
+//     path: '/',
+//     redirect: '/home',
+//   },
+//   {
+//     name: '首页',
+//     path: '/home',
+//     component: './Home',
+//   },
+//   // {
+//   //   name: '权限演示',
+//   //   path: '/access',
+//   //   component: './Access',
+//   // },
+//   {
+//     path: '/login',
+//     component: './Login',
+//     menuRender: false,
+//     // headerRender:false
+//   },
+//   {
+//     name: '会员管理',
+//     path: '/customer',
+//     component: './Customer',
+//   },
+//   {
+//     name: '动账记录',
+//     path: '/charge',
+//     component: './Charge',
+//   },
+// ];

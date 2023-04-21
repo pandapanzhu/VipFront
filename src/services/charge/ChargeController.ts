@@ -14,7 +14,7 @@ export async function queryList(
   },
   options?: { [key: string]: any },
 ) {
-  return request<API.Result_PageInfo_UserInfo__>('/host/api/charge/list', {
+  return request<API.Result_PageInfo_UserInfo__>('/vip-test-backend/charge/list', {
     method: 'GET',
     params: {
       ...params,
@@ -34,7 +34,7 @@ export async function getDetail(
   options?: { [key: string]: any },
 ) {
   const { chargeId: param0 } = params;
-  return request<API.Result_UserInfo_>(`/host/api/charge/info/${param0}`, {
+  return request<API.Result_UserInfo_>(`/vip-test-backend/charge/info/${param0}`, {
     method: 'GET',
     // params: { ...params },
     ...(options || {}),
@@ -51,7 +51,7 @@ export async function saveCharge(
   },
   options?: { [key: string]: any },
 ) {
-  return request<API.Result_UserInfo_>(`/host/api/charge/save`, {
+  return request<API.Result_UserInfo_>(`/vip-test-backend/charge/save`, {
     method: 'POST',
     data: { ...params },
     ...(options || {}),

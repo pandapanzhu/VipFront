@@ -9,6 +9,7 @@ export default defineConfig({
   layout: {
     title: '会员管理系统',
   },
+  // history:{type:'hash'},
 
   routes: [
     {
@@ -43,6 +44,7 @@ export default defineConfig({
     },
   ],
   npmClient: 'pnpm',
-  proxy: {}
+  proxy: {},
+  
 });
 

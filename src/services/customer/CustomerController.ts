@@ -15,7 +15,7 @@ export async function queryUserList(
   },
   options?: { [key: string]: any },
 ) {
-  return request<API.Result_PageInfo_UserInfo__>('/host/api/customer/list', {
+  return request<API.Result_PageInfo_UserInfo__>('/vip-test-backend/customer/list', {
     method: 'GET',
     params: {
       ...params,
@@ -28,7 +28,7 @@ export async function addUser(
   body?: API.CustomerInfoVO,
   options?: { [key: string]: any },
 ) {
-  return request<API.Result_UserInfo_>('/host/api/customer/save', {
+  return request<API.Result_UserInfo_>('/vip-test-backend/customer/save', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export async function getUserDetail(
   options?: { [key: string]: any },
 ) {
   const { customerId: param0 } = params;
-  return request<API.Result_UserInfo_>(`/host/api/customer/info/${param0}`, {
+  return request<API.Result_UserInfo_>(`/vip-test-backend/customer/info/${param0}`, {
     method: 'GET',
     // params: { ...params },
     ...(options || {}),
@@ -60,7 +60,7 @@ export async function modifyUser(
   body?: API.CustomerInfoVO,
   options?: { [key: string]: any },
 ) {
-  return request<API.Result_UserInfo_>(`/host/api/customer/update`, {
+  return request<API.Result_UserInfo_>(`/vip-test-backend/customer/update`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ export async function handleFreeze(
   },
   options?: { [key: string]: any },
 ) {
-  return request<API.Result_string_>(`/host/api/customer/delete/`, {
+  return request<API.Result_string_>(`/vip-test-backend/customer/delete/`, {
     method: 'POST',
     data: params,
     ...(options || {}),
@@ -91,7 +91,7 @@ export async function imgUpload(
   formData?: any,
   options?: { [key: string]: any },
 ) {
-  return request<API.Result>(`/host/api/upload/uploadBlobFile`, {
+  return request<API.Result>(`/vip-test-backend/upload/uploadBlobFile`, {
     method: 'POST',
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -105,7 +105,7 @@ export async function imgUpload(
     formData?: any,
     options?: { [key: string]: any },
   ) {
-    return request<API.Result>(`/host/api/charge/save`, {
+    return request<API.Result>(`/vip-test-backend/charge/save`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ export async function imgUpload(
     },
     options?: { [key: string]: any },
   ) {
-    return request<API.Result>(`/host/api/customer/chargeList`, {
+    return request<API.Result>(`/vip-test-backend/customer/chargeList`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

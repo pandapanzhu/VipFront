@@ -1,6 +1,6 @@
 import services from '@/services/login';
 const { getUserInfo } = services.LoginController;
-import  { RequestConfig, RunTimeLayoutConfig,Link } from '@umijs/max';
+import  { RequestConfig, RunTimeLayoutConfig,Link,history  } from '@umijs/max';
 import { message,Button } from 'antd';
 import dayjs from 'dayjs';
 import RightContent from './components/RightContent';
@@ -78,7 +78,7 @@ export const request: RequestConfig = {
       }
       if (!token) {
         message.warning("登录超时，请重新登录");
-        window.location.href = "/login";
+        history.push("/login") ;
       }else {
         if (config && config.headers) {
           // 拦截请求配置，进行个性化处理。
@@ -99,7 +99,7 @@ export const request: RequestConfig = {
       // 如果返回的401则跳转到登录页面，返回的402则提示已过期，需要续费
       if (401 == code) {
         message.warning("登录超时，请重新登录");
-        window.location.href = "/login";
+        history.push("/login") ;
       } else if (402 == code) {
         message.error("你的账户余额不足，请及时充值");
       }

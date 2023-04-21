@@ -9,10 +9,10 @@ export default defineConfig({
     },
   },
   proxy:{
-    "/host/api":{
+    "/vip-test-backend":{
       "target":"http://localhost:8080",
       "changeOrigin":true,
-      "pathRewrite":{"/host/api":''}
+      "pathRewrite":{"/vip-test-backend":''}
     }
   }
 });

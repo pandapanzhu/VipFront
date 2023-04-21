@@ -8,10 +8,10 @@ export default defineConfig({
     
   },
   proxy:{
-    "/host/api":{
+    "/vip-test-backend":{
       "target":"http://localhost:8090",
       "changeOrigin":true,
-      "pathRewrite":{"/host/api":''}
+      "pathRewrite":{"/vip-test-backend":''}
     },
   }
 });

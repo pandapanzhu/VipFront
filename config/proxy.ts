@@ -9,31 +9,31 @@
 export default {
   dev: {
     // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
-    "/host/api":{
+    "/vip-test-backend":{
       "target":"http://localhost:8090",
       "changeOrigin":true,
-      "pathRewrite":{"/host/api":''}
+      "pathRewrite":{"/vip-test-backend":''}
     },
   },
   test: {
-    "/host/api":{
+    "/vip-test-backend":{
       "target":"http://47.109.18.206:8090",
       "changeOrigin":true,
-      "pathRewrite":{"/host/api":''}
+      "pathRewrite":{"/vip-test-backend":''}
     }
   },
   sit: {
-    "/host/api":{
+    "/vip-test-backend":{
       "target":"https://www.cd3yu.com/vip-test",
       "changeOrigin":true,
-      "pathRewrite":{"/host/api":''}
+      "pathRewrite":{"/vip-test-backend":''}
     }
   },
   pre: {
-    "/host/api":{
+    "/vip-test-backend":{
       "target":"http://localhost:8090",
       "changeOrigin":true,
-      "pathRewrite":{"/host/api":''}
+      "pathRewrite":{"/vip-test-backend":''}
     }
   },
 } as any;

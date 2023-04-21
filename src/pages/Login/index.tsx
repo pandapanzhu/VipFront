@@ -96,7 +96,7 @@ const LoginPage: React.FC<API.LoginInfo> = () => {
             if (!uuid) {
                 uuid = workId + '_' + getUUID();
             }
-            setCaptureImg('/host/api/login/getCapture?uuid=' + uuid);
+            setCaptureImg('/vip-test-backend/login/captcha.jpg?uuid=' + uuid);
             setUUID(uuid);
 
         } catch {

@@ -8,7 +8,7 @@ export async function queryPersonStatistics(
   },
   options?: { [key: string]: any },
 ) {
-  return request<API.Result>('/host/api/statistics/person', {
+  return request<API.Result>('/vip-test-backend/statistics/person', {
     method: 'GET',
     params: {
       ...params,
@@ -26,7 +26,7 @@ export async function queryChargeStatistics(
   },
   options?: { [key: string]: any },
 ) {
-  return request<API.Result>(`/host/api/statistics/charge`, {
+  return request<API.Result>(`/vip-test-backend/statistics/charge`, {
     method: 'GET',
     params: { ...params },
     ...(options || {}),
