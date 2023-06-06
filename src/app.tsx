@@ -73,7 +73,7 @@ export const request: RequestConfig = {
     (config: Request) => {
       const token = localStorage.getItem("api-token");
       const url = config.url;
-      if(url.indexOf('doLogin')>0 || url.indexOf('getCapture')>0){
+      if(url.indexOf('doLogin')>0 || url.indexOf('captcha')>0){
         return { ...config };
       }
       if (!token) {

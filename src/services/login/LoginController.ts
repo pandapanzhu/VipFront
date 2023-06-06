@@ -29,12 +29,11 @@ export async function doLogout(
  */
 export async function getCaptcha(
   params: {
-    uuid?: string;
+    uuid?: string | undefined;
   },
   options?: { [key: string]: any },
 ) {
-  const { uuid: param0 } = params;
-  return request<any>(`/vip-test-backend/login/getCapture`, {
+  return request<any>(`/vip-test-backend/login/captcha.jpg`, {
     method: 'GET',
     params: {
       ...params,

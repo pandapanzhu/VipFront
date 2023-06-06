@@ -16,7 +16,7 @@ import CryptoJS from 'crypto-js'; //引入
 import { AES_IV, AES_KEY } from '@/constants';
 
 
-const { doLogin,getUserInfo } = services.LoginController;
+const { doLogin,getUserInfo,getCaptcha } = services.LoginController;
 
 const iconStyles: CSSProperties = {
     color: 'rgba(0, 0, 0, 0.2)',
@@ -89,14 +89,19 @@ const LoginPage: React.FC<API.LoginInfo> = () => {
     const [uuid, setUUID] = useState(workId + '_' + getUUID());
     const [captureImg, setCaptureImg] = useState('');
     const getCaptureImg = async (
-        uuid: string
+        uuid: string | undefined
     ) => {
         //在这里请求后台数据
         try {
             if (!uuid) {
                 uuid = workId + '_' + getUUID();
             }
-            setCaptureImg('/vip-test-backend/login/captcha.jpg?uuid=' + uuid);
+            const captcaResponse = await getCaptcha({"uuid":uuid});
+            if(captcaResponse.code == 200){
+                setCaptureImg(captcaResponse.data)
+            }else{
+                message.error('验证码获取失败，请联系管理员');
+            }
             setUUID(uuid);
 
         } catch {
