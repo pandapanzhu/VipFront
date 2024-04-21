@@ -9,7 +9,7 @@ export default defineConfig({
   },
   proxy:{
     "/vip-test-backend":{
-      "target":"https://www.cd3yu.com/",
+      "target":"https://www.zeita.com.cn/",
       "changeOrigin":true,
       "pathRewrite":{"/vip-test-backend":''}
     }

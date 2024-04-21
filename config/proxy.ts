@@ -24,7 +24,7 @@ export default {
   },
   sit: {
     "/vip-test-backend":{
-      "target":"https://www.cd3yu.com/vip-test",
+      "target":"https://www.zeita.com.cn/vip-test",
       "changeOrigin":true,
       "pathRewrite":{"/vip-test-backend":''}
     }

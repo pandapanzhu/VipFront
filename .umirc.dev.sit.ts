@@ -4,12 +4,13 @@ export default defineConfig({
   define: {
     "process.env": {
       UMI_ENV: 'sit',
-      BASE_URL: '/viptest/'
+      BASE_URL: '/viptest/',
+      CAPTCHA_PREX:"RDPDEV-"
     },
   },
   proxy: {
     "/vip-test-backend": {
-      "target": "https://www.cd3yu.com/vip-test-backend",
+      "target": "https://www.zeita.com.cn/vip-test-backend",
       "changeOrigin": true,
       "pathRewrite": { "/vip-test-backend": '' }
     }

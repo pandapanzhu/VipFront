@@ -5,6 +5,7 @@ export default defineConfig({
     process:{
       env:{
         UMI_ENV:process.env.UMI_ENV,
+        CAPTCHA_PREX:"RDP-"
       }
     },
   },
