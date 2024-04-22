@@ -29,7 +29,10 @@ export interface UpdateFormProps {
   values: Partial<API.CustomerInfo>;
 
 }
-
+const typeOptions = [
+  {label:'限时会员', value:1},
+  {label:'永久会员', value:2},
+];
 
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   const customerId = props.values.customerId;
@@ -38,9 +41,8 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   const [fileList, setFileList] = useState<UploadFile[]>();
 
 
-
   //图片预览相关方法
-  const handleCancel = () => setPreviewOpen(false);
+  const handleCancel = () => { setPreviewOpen(false) };
   const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -89,6 +91,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           'status': 'done',
           'url': res?.data.avatar,
         }]);
+        form.setFieldsValue(res?.data);
         return res?.data
       }}
       title="修改会员信息"
@@ -99,6 +102,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         onCancel: () => onCancel(),
       }}
       form={form}
+      // formRef={form}
       onFinish={props.onSubmit}
     >
       <ProForm.Group>
@@ -115,20 +119,18 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         <ProFormText width="md" label="手机号码" name="mobile" placeholder="请输入手机号码" required />
         <ProFormRadio.Group width="md" label="性别" name="gender" options={[{
           label: '男',
-          value: '0',
-        },
+          value: 0,        },
         {
           label: '女',
-          value: '1',
+          value: 1,
         },]} />
         <ProFormText width="md" label="真实姓名" name="realName" placeholder="请输入真实姓名" />
         <ProFormSelect width="md" label="身份类型" name="idType" placeholder="请选择身份证类型"
           valueEnum={{ '0': '身份证' }}
         />
         <ProFormText width="md" label="身份证号码" name="idNum" placeholder="请输入身份证号码" />
-        <ProFormMoney width="md" label="充值金额" name="charge" placeholder="请输入充值金额" />
-        <ProFormSelect width="md" label="会员类型" name="type" placeholder="请选择会员类型"
-          valueEnum={{ '1': '永久会员', '2': '限时会员' }}
+        <ProFormMoney width="md" label="充值金额" name="charge" placeholder="请输入充值金额" disabled />
+        <ProFormSelect width="md" label="会员类型" name="type" placeholder="请选择会员类型" fieldProps ={{options:typeOptions}}
         />
         <ProFormDateTimePicker width="md" label="过期时间" name="expiredDate" placeholder="请选择过期时间" />
         <ProFormTextArea width="md" label="备注" name="remark" placeholder="请输入备注" />
@@ -143,3 +145,4 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
 }
 
 export default UpdateForm;
+

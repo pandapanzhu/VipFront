@@ -264,8 +264,8 @@ const TableList: React.FC<unknown> = () => {
           }
         }}
         onCancel={() => {
-          handleUpdateModalVisible(false);
           setStepFormValues({});
+          handleUpdateModalVisible(false);
         }}
         updateModalVisible={updateModalVisible}
         values={stepFormValues}
